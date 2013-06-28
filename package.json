@@ -1,0 +1,43 @@
+{
+  "name": "ndarray-stencil",
+  "version": "0.0.0",
+  "description": "Stencil operations for ndarrays",
+  "main": "stencil.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "cwise": "~0.3.2",
+    "dup": "~0.0.0"
+  },
+  "devDependencies": {
+    "ndarray-unpack": "~0.0.0",
+    "tape": "~1.0.4",
+    "zeros": "~0.0.0"
+  },
+  "scripts": {
+    "test": "tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikolalysenko/ndarray-stencil.git"
+  },
+  "keywords": [
+    "stencil",
+    "ndarray",
+    "loop",
+    "cellular",
+    "automata",
+    "pde",
+    "partial",
+    "differential",
+    "equation"
+  ],
+  "author": "Mikola Lysenko",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "90c6676ec0b7ae9990c25275e16bbe74dd2e52f3",
+  "bugs": {
+    "url": "https://github.com/mikolalysenko/ndarray-stencil/issues"
+  }
+}
