@@ -11,6 +11,9 @@ function generateCWiseLoop(n, d, func) {
     body_args.push("a"+i)
   }
   
+  args.push("index")
+  body_args.push("idx")
+
   body_args.push(["out=func(",body_args.join(","),")"].join(""))
   body_args.unshift("out")
   body_args.unshift("func")
