@@ -23,5 +23,19 @@ require("tape")("ndarray-stencil", function(t) {
     [0, 0, 0.25, 0, 0],
     [0, 0, 0, 0, 0]])
 
+
+  var addIdx = createStencil([[-1, 0], [1,0], [0,-1], [0,1]], function(a,b,c,d, i) {
+    return 0.25*(a+b+c+d) + i[0]*10 + i[1]
+  }, { useIndex: true })
+  
+  addIdx(y, x)
+  t.same(unpack(y), [
+    [0, 0, 0, 0, 0],
+    [0, 0, 1.25, 2, 0],
+    [0, 10.25, 11, 12.25, 0],
+    [0, 20, 21.25, 22, 0],
+    [0, 0, 0, 0, 0]])
+
+
   t.end()
 })

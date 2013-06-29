@@ -3,7 +3,7 @@
 var dup = require("dup")
 var cwise = require("cwise")
 
-function generateCWiseLoop(n, d, func) {
+function generateCWiseLoop(n, d, func, options) {
   var body_args = []
   var args = ["scalar", "array"]
   for(var i=0; i<n; ++i) {
@@ -11,6 +11,10 @@ function generateCWiseLoop(n, d, func) {
     body_args.push("a"+i)
   }
   
+  if(options.useIndex) {
+    body_args.push("idx")
+    args.push("index")
+  }
   body_args.push(["out=func(",body_args.join(","),")"].join(""))
   body_args.unshift("out")
   body_args.unshift("func")
@@ -67,7 +71,8 @@ function generateWrapper(points, lo, hi, loop) {
   return proc.bind(undefined, loop)
 }
 
-function stencilOp(points, func) {
+function stencilOp(points, func, options) {
+  options = options || {}
   if(points.length === 0) {
     throw new Error("ndarray-stencil: Need to specify at least one point for stencil")
   }
@@ -82,7 +87,7 @@ function stencilOp(points, func) {
       hi[j] = Math.max(hi[j], p[j])
     }
   }
-  var cwiseLoop = generateCWiseLoop(n, d, func)
+  var cwiseLoop = generateCWiseLoop(n, d, func, options)
   return generateWrapper(points, lo, hi, cwiseLoop)
 }
 

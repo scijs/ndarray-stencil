@@ -35,11 +35,13 @@ diffuse(y, x)
 npm install ndarray-stencil
 ```
 
-### `require("ndarray-stencil")(points, stencil_func)`
+### `require("ndarray-stencil")(points, stencil_func[, options])`
 Creates a stencil operator for an ndarray.  
 
 * `points` is a list of points that the stencil will be evaluated on
 * `stencil_func(...)` is a function that takes in n arguments, where `n` is the number points to evaluate the stencil on, and returns the new value of the grid on the given point.
+* `options` is an object containing a list of optional properties:
+    + `useIndex` If this flag is set, add an extra index parameter as the last argument to `stencil_func`.  (Default `false`)
 
 **Returns** A function that applies the stencil to two arrays.  The first argument is the output array, and the second is the input.
 
