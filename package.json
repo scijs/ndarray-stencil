@@ -1,13 +1,13 @@
 {
   "name": "ndarray-stencil",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Stencil operations for ndarrays",
   "main": "stencil.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "cwise": "~0.3.2",
+    "cwise": "~0.3.3",
     "dup": "~0.0.0"
   },
   "devDependencies": {
