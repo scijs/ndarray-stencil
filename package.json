@@ -13,7 +13,9 @@
   "devDependencies": {
     "ndarray-unpack": "~0.0.0",
     "tape": "~1.0.4",
-    "zeros": "~0.0.0"
+    "zeros": "~0.0.0",
+    "ndarray-proxy": "0.0.0",
+    "ndarray-ops": "~1.1.0"
   },
   "scripts": {
     "test": "tap test/*.js"

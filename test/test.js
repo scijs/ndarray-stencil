@@ -1,10 +1,13 @@
 "use strict"
 
 var zeros = require("zeros")
+var ops = require("ndarray-ops")
 var unpack = require("ndarray-unpack")
+var proxy = require("ndarray-proxy")
+var test = require("tape")
 var createStencil = require("../stencil.js")
 
-require("tape")("ndarray-stencil", function(t) {
+test("ndarray-stencil", function(t) {
 
   var diffuse = createStencil([[-1, 0], [1,0], [0,-1], [0,1]], function(a,b,c,d) {
     return 0.25*(a+b+c+d)
@@ -35,7 +38,19 @@ require("tape")("ndarray-stencil", function(t) {
     [0, 10.25, 11, 12.25, 0],
     [0, 20, 21.25, 22, 0],
     [0, 0, 0, 0, 0]])
-
+    
+  var lazyX = proxy([5,5], function(i,j) {
+    return (i===2 && j===2) ? 1 : 0
+  })
+  ops.assigns(y, 0)
+  diffuse(y, lazyX)
+  t.same(unpack(y), [
+    [0, 0, 0, 0, 0],
+    [0, 0, 0.25, 0, 0],
+    [0, 0.25, 0, 0.25, 0],
+    [0, 0, 0.25, 0, 0],
+    [0, 0, 0, 0, 0]])
+  
 
   t.end()
 })
