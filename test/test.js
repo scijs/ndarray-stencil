@@ -52,5 +52,20 @@ test("ndarray-stencil", function(t) {
     [0, 0, 0, 0, 0]])
   
 
+  var lazyY = proxy([5,5], function(i,j) {
+    return y.get(i,j)
+  }, function(i,j,v) {
+    return y.set(i,j,v)
+  })
+  
+  ops.assigns(y, 0)
+  diffuse(lazyY, lazyX)
+  t.same(unpack(y), [
+    [0, 0, 0, 0, 0],
+    [0, 0, 0.25, 0, 0],
+    [0, 0.25, 0, 0.25, 0],
+    [0, 0, 0.25, 0, 0],
+    [0, 0, 0, 0, 0]])
+
   t.end()
 })

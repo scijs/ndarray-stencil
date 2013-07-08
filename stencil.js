@@ -56,6 +56,7 @@ function generateWrapper(points, lo, hi, loop, funcName, debug) {
   }
   vars.push(["nshape=[", nshape.join(), "]"].join(""))
   
+  
   code.push(["return function ", funcName, "_stencil_wrapper(out,inp){"].join(""))
   code.push("var " + vars.join())
   
