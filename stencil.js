@@ -44,11 +44,12 @@ function createSlice(name, lo, hi, point) {
   return ["new ", name, "_c(", name, "_d,nshape,", name, "_s,(", noffset.join("+"),")|0)"].join("")
 }
 
-function generateWrapper(points, lo, hi, loop, funcName, debug) {
+function generateWrapper(points, lo, hi, loop, funcName, options) {
+  var debug = !!options.debug
   var n = points.length
   var d = lo.length
   var code = ["'use strict'"]
-  var vars = ["s=out.shape,out_c=out.constructor,inp_c=inp.constructor,out_s=out.stride,inp_s=inp.stride,out_d=out.data,inp_d=inp.data,out_o=out.offset,inp_o=inp.offset"]
+  var vars = ["s=inp.shape,inp_c=inp.constructor,inp_s=inp.stride,inp_d=inp.data,inp_o=inp.offset"]
   var nshape = []
   for(var i=0; i<d; ++i) {
     vars.push(["s", i, "=s[", i, "]|0"].join(""))
@@ -56,11 +57,17 @@ function generateWrapper(points, lo, hi, loop, funcName, debug) {
   }
   vars.push(["nshape=[", nshape.join(), "]"].join(""))
   
+  var funcArgs = []
+  if(options.sameOutput) {
+    funcArgs.push("out")
+  } else {
+    vars.push("out_c=out.constructor,out_d=out.data,out_s=out.stride,out_o=out.offset")
+    funcArgs.push(createSlice("out", lo, hi, dup(d)))
+  }
   
   code.push(["return function ", funcName, "_stencil_wrapper(out,inp){"].join(""))
   code.push("var " + vars.join())
   
-  var funcArgs = [ createSlice("out", lo, hi, dup(d)) ]
   for(var i=0; i<points.length; ++i) {
     funcArgs.push(createSlice("inp", lo, hi, points[i]))
   }
@@ -92,7 +99,7 @@ function stencilOp(points, func, options) {
     }
   }
   var cwiseLoop = generateCWiseLoop(n, d, func, options)
-  return generateWrapper(points, lo, hi, cwiseLoop, options.funcName || func.name, options.debug)
+  return generateWrapper(points, lo, hi, cwiseLoop, options.funcName || func.name, options)
 }
 
 module.exports = stencilOp

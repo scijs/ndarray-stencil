@@ -42,6 +42,7 @@ Creates a stencil operator for an ndarray.
 * `stencil_func(...)` is a function that takes in n arguments, where `n` is the number points to evaluate the stencil on, and returns the new value of the grid on the given point.
 * `options` is an object containing a list of optional properties:
     + `useIndex` If this flag is set, add an extra index parameter as the last argument to `stencil_func`.  (Default `false`)
+    + `sameOutput` if set, then the output is not sliced and instead the result of the stencil operation is applied directly to output
 
 **Returns** A function that applies the stencil to two arrays.  The first argument is the output array, and the second is the input.
 

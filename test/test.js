@@ -67,5 +67,18 @@ test("ndarray-stencil", function(t) {
     [0, 0, 0.25, 0, 0],
     [0, 0, 0, 0, 0]])
 
+
+ var diffuseSame = createStencil([[-1, 0], [1,0], [0,-1], [0,1]], function(a,b,c,d) {
+    return 0.25*(a+b+c+d)
+  }, {sameOutput: true})
+  ops.assigns(y, 255)
+  diffuseSame(y.lo(1,1).hi(3,3), x)
+  t.same(unpack(y), [
+    [255, 255, 255, 255, 255],
+    [255, 0, 0.25, 0, 255],
+    [255, 0.25, 0, 0.25, 255],
+    [255, 0, 0.25, 0, 255],
+    [255, 255, 255, 255, 255]])
+
   t.end()
 })
