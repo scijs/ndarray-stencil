@@ -1,6 +1,6 @@
 {
   "name": "ndarray-stencil",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Stencil operations for ndarrays",
   "main": "stencil.js",
   "directories": {
